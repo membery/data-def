@@ -1,0 +1,81 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"id": "uri://registries/category#",
+
+	"blocks":{
+		"baseData":{
+			"title": "Základné údaje",
+			"transCode":"schema.category.baseData",
+			"type": "object",
+			"properties": {
+				"name": {
+					"title": "Názov kategórie",
+					"transCode":"schema.category.name",
+					"type": "string",
+					"required": true
+				}
+			}
+		}
+	},
+
+	"models":{
+		"category":{
+			"table" : "category",
+			"title" : "Kategória",
+			"transCode":"schema.category.title",
+			"security": {
+				"create": {
+					"static": [
+						"Registry - write"
+					]
+				},
+				"read": {
+					"static": [
+						"Registry - read"
+					]
+				},
+				"modify": {
+					"static": [
+						"Registry - write"
+					]
+				}
+			},
+			"properties":{
+				"baseData":{
+					"$ref":"uri://registries/category#blocks/baseData"
+				}
+			}
+		}
+	},
+
+	"views":{
+		"category":{
+			"new":{
+				"$ref":"uri://registries/category#models/category"
+			},
+			"view":{
+				"$ref":"uri://registries/category#models/category"
+			},
+			"search":{
+				"extends":"uri://registries/category#models/category",
+				"clientActions": [
+					{
+						"__DIRECTIVE__": "schema-redirect-link",
+						"title": "Zobraziť",
+						"params": {
+							"path": "/registry/view/uri~3A~2F~2Fregistries~2Fcategory~23views~2Fcategory/{{model.id}}"
+						}
+					}
+				],
+				"listFields": [
+					{
+						"field":"baseData.name",
+						"title":"Názov",
+						"transCode":"schema.category.name"
+					}
+				]
+			}
+		}
+
+	}
+}

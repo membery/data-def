@@ -1,0 +1,97 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"id": "uri://registries/disciplines#",
+
+	"blocks":{
+		"baseData":{
+			"title": "Základné údaje",
+			"transCode":"schema.disciplines.baseData",
+			"type": "object",
+			"properties": {
+				"name": {
+					"title": "Názov disciplíny",
+					"transCode":"schema.disciplines.name",
+					"type": "string",
+					"required": true
+				},
+				"sport": {
+					"type":"object",
+					"title": "Šport",
+					"transCode":"schema.disciplines.sport",
+					"objectLink2": {
+						"schema":"uri://registries/sports#views/sports/view",
+						"fields":{
+							"name": "baseData.name"
+						}
+					}
+				}
+			}
+		}
+	},
+
+	"models":{
+		"disciplines":{
+			"table" : "disciplines",
+			"title" : "Disciplína",
+			"transCode":"schema.disciplines.title",
+			"security": {
+				"create": {
+					"static": [
+						"Registry - write"
+					]
+				},
+				"read": {
+					"static": [
+						"Registry - read"
+					]
+				},
+				"modify": {
+					"static": [
+						"Registry - write"
+					]
+				}
+			},
+			"properties":{
+				"baseData":{
+					"$ref":"uri://registries/disciplines#blocks/baseData"
+				}
+			}
+		}
+	},
+
+	"views":{
+		"disciplines":{
+			"new":{
+				"$ref":"uri://registries/disciplines#models/disciplines"
+			},
+			"view":{
+				"$ref":"uri://registries/disciplines#models/disciplines"
+			},
+			"search":{
+				"extends":"uri://registries/disciplines#models/disciplines",
+				"clientActions": [
+					{
+						"__DIRECTIVE__": "schema-redirect-link",
+						"title": "Zobraziť",
+						"params": {
+							"path": "/registry/view/uri~3A~2F~2Fregistries~2Fdisciplines~23views~2Fdisciplines/{{model.id}}"
+						}
+					}
+				],
+				"listFields": [
+					{
+						"field":"baseData.name",
+						"title":"Názov",
+						"transCode":"schema.disciplines.name"
+					},
+					{
+						"field":"baseData.sport",
+						"title":"Šport",
+						"transCode":"schema.disciplines.sport"
+					}
+				]
+			}
+		}
+
+	}
+}
