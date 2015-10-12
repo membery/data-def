@@ -69,17 +69,6 @@
 			"transCode": "schema.people.additionalInfo",
 			"type": "object",
 			"properties": {
-				"association": {
-					"type":"object",
-					"title": "Zväz",
-					"transCode":"schema.people.additionalInfo.association",
-					"objectLink2": {
-						"schema":"uri://registries/organizations#views/association/view",
-						"fields":{
-							"name": "association.associationName"
-						}
-					}
-				},
 				"accountNumber": {
 					"title": "Číslo účtu",
 					"transCode": "schema.people.additionalInfo.accountNumber",
@@ -246,7 +235,7 @@
 			"title":"Osoba",
 			"transCode":"schema.people.title",
 			"properties":{
-				
+
 			}
 		},
 		"personalProfile": {
